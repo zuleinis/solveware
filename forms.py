@@ -1,0 +1,1 @@
+# Define las formas de entrada y salida para cada una de las rutas de Flask.
