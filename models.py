@@ -1,6 +1,7 @@
 # Define las clases
 import db
-
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 import random
 
 class InterfazUsuario:
@@ -42,8 +43,7 @@ class ReporteFallas:
     def cambiar_estado_reporte(self, nuevo_estado):
         self.estado = nuevo_estado
         db.test1.update_one({"numero_reporte": str(self.numero_reporte)}, {"$set": {"estado": str(self.nuevo_estado)}})
-
-    
+ 
     def editar_datos(self, a_editar, valor):
         if a_editar in self.datos:
             self.datos[a_editar] = valor
@@ -65,15 +65,19 @@ class Usuario:
     
     def editar_nombre(self, nuevo_nombre):
         self.nombre_completo = nuevo_nombre
+        db.test1.update_one({"_id": self.ID}, {"$set": {"nombre": "nuevo_nombre"}})
     
     def editar_email(self, nuevo_email):
         self.email = nuevo_email
+        db.test1.update_one({"_id": self.ID}, {"$set": {"email": "nuevo_email"}})
     
     def editar_tel(self, nuevo_telefono):
         self.num_telefono = nuevo_telefono
+        db.test1.update_one({"_id": self.ID}, {"$set": {"telefono": "nuevo_telefono"}})
     
     def editar_ubicacion(self, nueva_ubicacion):
         self.ubicacion = nueva_ubicacion
+        db.test1.update_one({"_id": self.ID}, {"$set": {"ubicacion": "nueva_ubicacion"}})
 
 class GeneradorReportes:
     def __init__(self, lista_reportes):
