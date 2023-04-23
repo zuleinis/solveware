@@ -1,0 +1,13 @@
+For queries that return a field that contains specific condition in MongoDB its:
+
+{attribute:/string/}
+
+for example:
+
+{postdate:/2023/}
+
+MongoDB cheatsheet: https://www.mongodb.com/developer/products/mongodb/cheat-sheet/
+
+                    https://gist.github.com/bradtraversy/f407d642bdc3b31681bc7e56d95485b6
+
+                    
