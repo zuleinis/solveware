@@ -115,19 +115,72 @@ def updatedatafrom(id):
     return redirect(f'/reporte-num-{id}')
 
 #Display most broken equipment
-@app.route('/equipo-con-mas-fallas', methods =["GET"])
+@app.route('/equipo-con-mas-fallas', methods =["GET","POST"])
 def equipos_con_mas_fallas():
         
         #result = db.db.test1.aggregate(pipeline)
-        result = db.db.test1.aggregate(
-            [
-                {"$group": {"_id": "$equipo", "count": {"$sum": 1}}},
-                {"$sort": {"count": -1}},
-            {"$limit": 1}
-            ]
-        )
+        # result = db.db.test1.aggregate(
+        #     [
+        #         {"$group": {"_id": "$equipo", "count": {"$sum": 1}}},
+        #         {"$sort": {"count": -1}},
+        #     {"$limit": 1}
+        #     ]
+        # )
+        #default values
+        start_month = "01"
+        start_day = "01"
+        start_year = "2023"
         
-        return render_template('equipomasfallas.html',result=result)
+        end_month = "12"
+        end_day = "31"
+        end_year = "2023"
+        
+        if request.method == "POST":
+            start_day = request.form.get("start_day")
+            start_month =  request.form.get("start_month")
+            start_year = request.form.get("start_year")
+            
+            end_day = request.form.get("end_day")
+            end_month =  request.form.get("end_month")
+            end_year = request.form.get("end_year")
+            
+        start_date = f"{start_year}-{start_month}-{start_day}"
+        end_date = f"{end_year}-{end_month}-{end_day}"
+        
+        dates = [start_date,end_date]
+
+        pipeline = [
+            {
+                "$match": {
+                    "postdate": {
+                        "$gte": start_date,
+                        "$lte": end_date
+                    }
+                }
+            },
+            {
+                "$group": {
+                    "_id": "$equipo",
+                    "count": { "$sum": 1 }
+                }
+            },
+            {
+                "$sort": {
+                    "count": -1
+                }
+            },
+        ]
+
+        #If the result is a tie, display all tied attributes
+        results = list(db.db.test1.aggregate(pipeline))
+        if results:
+            max_count = results[0]['count']
+        else:
+            max_count = 0
+
+        
+        result = [result for result in results if result['count'] == max_count]
+        return render_template('equipomasfallasporfecha.html',result=result,dates=dates)
 
 #Display the name of the person with the most entries in a selected date
 @app.route('/persona-con-mas-fallas', methods =["GET","POST"])
@@ -190,7 +243,53 @@ def persona_con_mas_fallas():
         
         return render_template('personamasfallas.html',result=result,dates=dates)
 
+@app.route('/fallas-por-periodo', methods =["GET","POST"])
+def fallas_por_periodo():
+        
+        #default values
+        start_month = "01"
+        start_day = "01"
+        start_year = "2023"
+        
+        end_month = "12"
+        end_day = "31"
+        end_year = "2023"
+        
+        if request.method == "POST":
+            start_day = request.form.get("start_day")
+            start_month =  request.form.get("start_month")
+            start_year = request.form.get("start_year")
+            
+            end_day = request.form.get("end_day")
+            end_month =  request.form.get("end_month")
+            end_year = request.form.get("end_year")
+            
+        start_date = f"{start_year}-{start_month}-{start_day}"
+        end_date = f"{end_year}-{end_month}-{end_day}"
+        
+        dates = [start_date,end_date]
 
+        #If the result is a tie, display all tied attributes
+        result = db.db.test1.find({'$and': [{'postdate': {'$gte': start_date}}, {'closeddate': {'$lte': end_date}}]})
+        print(result)
+        
+        count = 0
+        for report in result:
+            count += 1
+            
+        print(count)
+            
+        # results_count = results.count()
+        # return f'The number of reports submitted between {start_date} and {end_date} is {results}'
+        # if results:
+        #     max_count = results[0]['count']
+        # else:
+        #     max_count = 0
+
+        
+        # result = [result for result in results if result['count'] == max_count]
+        
+        return render_template('promedioreportes.html',result=count,dates=dates)
 
 if __name__ == '__main__':
     app.run(debug=True)
