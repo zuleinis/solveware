@@ -16,14 +16,18 @@
     <form action="equipo-con-mas-fallas">
         <input type="submit" value="Equipo con mas fallas" />
     </form>
+    <form action="persona-con-mas-fallas">
+        <input type="submit" value="Persona con mas fallas" />
+    </form>
 </head>
 
 </head>
     {% for data in reportes %}
         <div class="data">
-            <h3>{{data["nombre"]}}</h3>
-            <h3>{{data["equipo"]}}</h3>
-            <h3>{{data["falla"]}}</h3>
+            <h3>Nombre: {{data["nombre"]}}</h3>
+            <h3>ID de reporte: {{data["_id"]}}</h3>
+            <h3>Equipo: {{data["equipo"]}}</h3>
+            <h3>Falla: {{data["falla"]}}</h3>
             <h4><a href="reporte-num-{{data["_id"]}}" style="color:black;">More info</a></h4>
             <h4><a href="delete-{{data["_id"]}}" style="color:black; float: right; padding-bottom: 10px;">Delete</a></h4>
         </div>

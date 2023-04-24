@@ -1,5 +1,5 @@
 #this is Bryan's branch
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, jsonify
 from bson.objectid import ObjectId
 from datetime import date, datetime
 import db
@@ -27,7 +27,7 @@ def crear_reporte():
        
        
        today = date.today()
-       postdate = today.strftime("%B %d, %Y")
+       postdate = today.strftime("%Y-%m-%d")
        
        now = datetime.now()
        current_time = now.strftime("%H:%M:%S")
@@ -75,7 +75,7 @@ def showdatafrom(id):
 def deletedatafrom(id):
     ObjId = ObjectId(str(id))
     db.db.test1.delete_one({'_id' : ObjId})
-    return redirect('/display')
+    return redirect('/display-reportes')
 
 #Update specific report / Cerrar reporte
 @app.route('/update-<id>')
@@ -83,7 +83,7 @@ def updatedatafrom(id):
     ObjId = ObjectId(str(id))
     
     today = date.today()
-    postdate = today.strftime("%B %d, %Y")
+    postdate = today.strftime("%Y-%m-%d")
     
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
@@ -107,6 +107,67 @@ def equipos_con_mas_fallas():
         )
         
         return render_template('equipomasfallas.html',result=result)
+
+#Display the name of the person with the most entries in a selected date
+@app.route('/persona-con-mas-fallas', methods =["GET","POST"])
+def persona_con_mas_fallas():
+        
+        #default values
+        start_month = "01"
+        start_day = "01"
+        start_year = "2023"
+        
+        end_month = "12"
+        end_day = "31"
+        end_year = "2023"
+        
+        if request.method == "POST":
+            start_day = request.form.get("start_day")
+            start_month =  request.form.get("start_month")
+            start_year = request.form.get("start_year")
+            
+            end_day = request.form.get("end_day")
+            end_month =  request.form.get("end_month")
+            end_year = request.form.get("end_year")
+            
+        start_date = f"{start_year}-{start_month}-{start_day}"
+        end_date = f"{end_year}-{end_month}-{end_day}"
+        
+        dates = [start_date,end_date]
+
+        pipeline = [
+            {
+                "$match": {
+                    "postdate": {
+                        "$gte": start_date,
+                        "$lte": end_date
+                    }
+                }
+            },
+            {
+                "$group": {
+                    "_id": "$nombre",
+                    "count": { "$sum": 1 }
+                }
+            },
+            {
+                "$sort": {
+                    "count": -1
+                }
+            },
+        ]
+
+        #If the result is a tie, display all tied attributes
+        results = list(db.db.test1.aggregate(pipeline))
+        if results:
+            max_count = results[0]['count']
+        else:
+            max_count = 0
+
+        
+        result = [result for result in results if result['count'] == max_count]
+        
+        return render_template('personamasfallas.html',result=result,dates=dates)
 
 if __name__ == '__main__':
     app.run(debug=True)
