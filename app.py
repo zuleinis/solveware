@@ -13,7 +13,7 @@ app = Flask(__name__,template_folder='templates', static_folder='static')
 
 @app.route('/')
 def homepage():
-    return render_template('home.html')
+    return render_template('index.html')
 
 #Collects data from the form and inserts it to the Database
 @app.route('/crear-reporte', methods =["GET", "POST"])
