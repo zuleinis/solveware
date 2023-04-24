@@ -9,7 +9,7 @@ import db
 # from models import InterfazUsuario
 # from pymongo import MongoClient
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='templates', static_folder='static')
 
 @app.route('/')
 def homepage():
@@ -41,7 +41,9 @@ def crear_reporte():
                                "posttime": current_time,
                                "closeddate": "Not yet closed",
                                "closedtime": "Not yet closed",
-                               "tecnico": "Not yet assigned",})
+                               "tecnico": "Not yet assigned",
+                               "fixstatus": None,
+                               "descripción": None})
        
     return render_template('formulario.html')
 
@@ -56,7 +58,26 @@ def showdata():
     print(reportes)
     return render_template('reportes.html',reportes=reportes)
 
-#Display specific report
+#Display all reports in the database from the given month and year
+@app.route('/display-reportes-por-mes-y-año', methods =["GET","POST"])
+def showdatapermonth():
+    month = ""
+    year = ""
+    
+    if request.method == "POST":
+        month = str(request.form.get("selected_month"))
+        year = str(request.form.get("selected_year"))
+    
+    date = [month,year]
+    regexdate = f"{year}-{month}"
+    print(regexdate)
+    #reportes = db.db.test1.find({'$and' : [{"postdate": {'$regex': month}},{"postdate": {'$regex': year}}]}).sort("_id", -1)
+    reportes = db.db.test1.find({"postdate": {'$regex': regexdate}})
+    print(reportes)
+    #reportes = db.db.test1.find({'$and' : [{"postdate": {'$regex': "April"}},{"postdate": {'$regex': "2022"}}]})
+    return render_template('reportes_por_mes_y_año.html',reportes=reportes,date=date)
+
+#Display specific report and assign tecnico
 @app.route('/reporte-num-<id>',methods =["GET","POST"])
 def showdatafrom(id):
     ObjId = ObjectId(str(id))
@@ -65,7 +86,7 @@ def showdatafrom(id):
     if request.method == "POST":
         tecnico = request.form.get("tecnicos")
         db.db.test1.update_one({'_id' : ObjId}, {'$set': {'tecnico': tecnico }})
-        db.db.test1.update_one({'_id' : ObjId}, {'$set': {'status': "en progreso" }})
+        db.db.test1.update_one({'_id' : ObjId}, {'$set': {'status': "en ejecución" }})
     
     return render_template('reporte.html',reporte=reporte)
 
@@ -168,6 +189,8 @@ def persona_con_mas_fallas():
         result = [result for result in results if result['count'] == max_count]
         
         return render_template('personamasfallas.html',result=result,dates=dates)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
