@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <link rel="stylesheet" href="/static/css/home.css">
+</header>
+
+<body>
+
+<div class="container">
+    <div style="text-align: center;">
+        <img src="{{ url_for('static', filename='solveware_logo.png') }}" alt = "Logo" >
+    </div>
+
+    <h1>Departamento de Atención al Usuario</h1>
+
+    <form action="crear-reporte">
+        <input type="submit" value="Crear reporte" />
+    </form>
+
+    <form action="display-reportes">
+        <input type="submit" value="Ver reportes" />
+    </form>
+</div>
+
+</body>
+</html>
