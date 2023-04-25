@@ -2,8 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FlaskApp</title>
+    <title>Solveware</title>
     <style>
+
+        body {
+            background: linear-gradient(45deg, #FC466B, #3F5EFB);
+            height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+        }
+
         .data {
             padding-left: 20px;
             padding-right:20px;
@@ -18,20 +25,24 @@
         }
     </style>
 
-<head>
+</head>
+<body>
     <h1>Reportes de Falla</h1>
-    <form action="equipo-con-mas-fallas">
-        <input type="submit" value="Equipo con mas fallas" />
-    </form>
-    <form action="persona-con-mas-fallas">
-        <input type="submit" value="Persona con mas fallas" />
-    </form>
-    <form action="display-reportes-por-mes-y-año">
-        <input type="submit" value="Reportes por mes y año" />
-    </form>
-</head>
+    <div>
+        <form style="display:inline-block" action="equipo-con-mas-fallas">
+          <input type="submit" value="Equipo con mas fallas" />
+        </form>
+        <form style="display:inline-block" action="persona-con-mas-fallas">
+          <input type="submit" value="Persona con mas fallas" />
+        </form>
+        <form style="display:inline-block" action="display-reportes-por-mes-y-año">
+          <input type="submit" value="Reportes por mes y año" />
+        </form>
+        <form style="display:inline-block" action="fallas-por-periodo">
+          <input type="submit" value="Fallas por mes y año" />
+        </form>
+      </div>
 
-</head>
     {% for data in reportes %}
         <div class="data">
             <h3>Nombre: {{data["nombre"]}}</h3>

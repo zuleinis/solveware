@@ -13,7 +13,7 @@ app = Flask(__name__,template_folder='templates', static_folder='static')
 
 @app.route('/')
 def homepage():
-    return render_template('index.html')
+    return render_template('index.html', title='Solveware')
 
 #Collects data from the form and inserts it to the Database
 @app.route('/crear-reporte', methods =["GET", "POST"])
@@ -24,6 +24,7 @@ def crear_reporte():
        email = request.form.get("email")
        equipo = request.form.get("equipo")
        falla = request.form.get("falla")
+       tel = request.form.get("tel")
        
        
        today = date.today()
@@ -34,6 +35,7 @@ def crear_reporte():
        
        db.db.test1.insert_one({"nombre" : nombre,
                                "email" : email,
+                               "tel": tel,
                                "equipo": equipo,
                                "falla": falla,
                                "status": "abierto",
@@ -56,7 +58,7 @@ def showdata():
     #reportes = db.db.test1.find({'$and' : [{"postdate": {'$regex': "April"}},{"postdate": {'$regex': "2022"}}]})
     
     print(reportes)
-    return render_template('reportes.html',reportes=reportes)
+    return render_template('reportes.html',title='Solveware',reportes=reportes)
 
 #Display all reports in the database from the given month and year
 @app.route('/display-reportes-por-mes-y-año', methods =["GET","POST"])
@@ -75,7 +77,7 @@ def showdatapermonth():
     reportes = db.db.test1.find({"postdate": {'$regex': regexdate}})
     print(reportes)
     #reportes = db.db.test1.find({'$and' : [{"postdate": {'$regex': "April"}},{"postdate": {'$regex': "2022"}}]})
-    return render_template('reportes_por_mes_y_año.html',reportes=reportes,date=date)
+    return render_template('reportes_por_mes_y_año.html',title='Solveware',reportes=reportes,date=date)
 
 #Display specific report and assign tecnico
 @app.route('/reporte-num-<id>',methods =["GET","POST"])
@@ -88,7 +90,7 @@ def showdatafrom(id):
         db.db.test1.update_one({'_id' : ObjId}, {'$set': {'tecnico': tecnico }})
         db.db.test1.update_one({'_id' : ObjId}, {'$set': {'status': "en ejecución" }})
     
-    return render_template('reporte.html',reporte=reporte)
+    return render_template('reporte.html',title='Solveware', reporte=reporte)
 
 
 #Deletes specific report
@@ -96,7 +98,7 @@ def showdatafrom(id):
 def deletedatafrom(id):
     ObjId = ObjectId(str(id))
     db.db.test1.delete_one({'_id' : ObjId})
-    return redirect('/display-reportes')
+    return redirect('/display-reportes', title='Solveware')
 
 #Update specific report / Cerrar reporte
 @app.route('/update-<id>')
@@ -112,7 +114,7 @@ def updatedatafrom(id):
     db.db.test1.update_one({'_id' : ObjId}, {'$set': {'status': 'cerrado'}})
     db.db.test1.update_one({'_id' : ObjId}, {'$set': {'closeddate': postdate }})
     db.db.test1.update_one({'_id' : ObjId}, {'$set': {'closedtime': current_time}})
-    return redirect(f'/reporte-num-{id}')
+    return redirect(f'/reporte-num-{id}', title='Solveware')
 
 #Display most broken equipment
 @app.route('/equipo-con-mas-fallas', methods =["GET","POST"])
@@ -180,7 +182,7 @@ def equipos_con_mas_fallas():
 
         
         result = [result for result in results if result['count'] == max_count]
-        return render_template('equipomasfallasporfecha.html',result=result,dates=dates)
+        return render_template('equipomasfallasporfecha.html', title='Solveware', result=result,dates=dates)
 
 #Display the name of the person with the most entries in a selected date
 @app.route('/persona-con-mas-fallas', methods =["GET","POST"])
@@ -241,7 +243,7 @@ def persona_con_mas_fallas():
         
         result = [result for result in results if result['count'] == max_count]
         
-        return render_template('personamasfallas.html',result=result,dates=dates)
+        return render_template('personamasfallas.html',title='Solveware',result=result,dates=dates)
 
 @app.route('/fallas-por-periodo', methods =["GET","POST"])
 def fallas_por_periodo():
@@ -289,7 +291,7 @@ def fallas_por_periodo():
         
         # result = [result for result in results if result['count'] == max_count]
         
-        return render_template('promedioreportes.html',result=count,dates=dates)
+        return render_template('promedioreportes.html',title='Solveware',result=count,dates=dates)
 
 if __name__ == '__main__':
     app.run(debug=True)
