@@ -98,7 +98,7 @@ def showdatafrom(id):
 def deletedatafrom(id):
     ObjId = ObjectId(str(id))
     db.db.test1.delete_one({'_id' : ObjId})
-    return redirect('/display-reportes', title='Solveware')
+    return redirect('/display-reportes')
 
 #Update specific report / Cerrar reporte
 @app.route('/update-<id>')
@@ -114,7 +114,7 @@ def updatedatafrom(id):
     db.db.test1.update_one({'_id' : ObjId}, {'$set': {'status': 'cerrado'}})
     db.db.test1.update_one({'_id' : ObjId}, {'$set': {'closeddate': postdate }})
     db.db.test1.update_one({'_id' : ObjId}, {'$set': {'closedtime': current_time}})
-    return redirect(f'/reporte-num-{id}', title='Solveware')
+    return redirect(f'/reporte-num-{id}')
 
 #Display most broken equipment
 @app.route('/equipo-con-mas-fallas', methods =["GET","POST"])
