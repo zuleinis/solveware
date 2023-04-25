@@ -4,38 +4,45 @@
 
     <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
     <meta charset="UTF-8">
-    <title>FlaskApp</title>
+    <title>Solveware</title>
     <style>
             .data {
                 padding: 20px;
                 margin: 10px;
                 background-color: #eee;
             }
+
+            body {
+                background: linear-gradient(45deg, #FC466B, #3F5EFB);
+                height: 100vh;
+                font-family: 'Montserrat', sans-serif;
+            }
     </style>
 
 </head>
+<body>
     {% for data in reporte%}
     <h1>Reporte de {{data["nombre"]}}</h1>
         <div class="data">
             <h3>ID: {{data["_id"]}}</h3>
             <h3>Nombre: {{data["nombre"]}}</h3>
             <h3>Email: {{data["email"]}}</h3>
-            <h3>Telefono: </h3>
+            <h3>Teléfono: {{data["tel"]}}</h3>
             <h3>Equipo: {{data["equipo"]}}</h3>
             <h3>Falla: {{data["falla"]}}</h3>
             <h3>Status: {{data["status"]}}</h3>
-            <h3>Fecha de publicacion: {{data["postdate"]}}</h3>
-            <h3>Hora de publicacion (AST): {{data["posttime"]}}</h3>
+            <h3>Fecha de publicación: {{data["postdate"]}}</h3>
+            <h3>Hora de publicación (AST): {{data["posttime"]}}</h3>
 
-            <h3>Tecnico: {{data["tecnico"]}} </h3>
+            <h3>Técnico: {{data["tecnico"]}} </h3>
             <form method="post">
                 <label for="tecnicos" style="font-weight: bold; font-size: 16px;">Escoge el tecnico:</label>
                 <br>
                 <select id="tecnicos" name="tecnicos" size="5" multiple style="padding: 10px; border-radius: 5px; border: none; background-color: #f2f2f2;">
                   <option value="Carlos">Carlos</option>
-                  <option value="Pedro">Pedro</option>
+                  <option value="Pedro">Luz</option>
                   <option value="Fran">Fran</option>
-                  <option value="Flor">Flor</option>
+                  <option value="Amanda">Amanda</option>
                   <option value="Edwin">Edwin</option>
                 </select>
                 <br><br>
