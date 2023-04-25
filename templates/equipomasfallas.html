@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>FlaskApp</title>
     <style>
-        .data {
-            padding: 20px;
-            margin: 10px;
-            background-color: #eee;
-        }
+      .data {
+        padding: 20px;
+        margin: 10px;
+        background-color: #eee;
+      }
     </style>
 
-{% for data in result %}
+    {% for data in result %}
     <h3>Equipo: {{data["_id"]}}</h3>
     <h3>Count: {{data["count"]}}</h3>
-{% endfor %}
+    {% endfor %}
+  </head>
+</html>
