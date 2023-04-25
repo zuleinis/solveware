@@ -44,8 +44,8 @@ def crear_reporte():
                                "closeddate": "Not yet closed",
                                "closedtime": "Not yet closed",
                                "tecnico": "Not yet assigned",
-                               "fixstatus": None,
-                               "descripción": None})
+                               "fixstatus": "",
+                               "descripción": ""})
        
     return render_template('formulario.html')
 

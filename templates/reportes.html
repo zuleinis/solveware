@@ -12,9 +12,16 @@
         }
 
         .data {
-            padding: 20px;
+            padding-left: 20px;
+            padding-right:20px;
+            padding-top:20px;
+            padding-bottom:5px;
             margin: 10px;
             background-color: #eee;
+        }
+
+        .trash {
+            text-align: right;
         }
     </style>
 
@@ -43,7 +50,9 @@
             <h3>Equipo: {{data["equipo"]}}</h3>
             <h3>Falla: {{data["falla"]}}</h3>
             <h4><a href="reporte-num-{{data["_id"]}}" style="color:black;">More info</a></h4>
-            <h4><a href="delete-{{data["_id"]}}" style="color:black; float: right; padding-bottom: 10px;">Delete</a></h4>
+            <div class="trash">
+                <p><a href="delete-{{data["_id"]}}" style="color:black; display:block; margin-left: auto;"><img src="{{ url_for('static', filename='Delete.png') }}"  style="width:25px;height:25px;"></a></p>
+            </div>
         </div>
     {% endfor %}
     </div>
