@@ -2,29 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FlaskApp</title>
+    <title>Solveware</title>
     <style>
+
+        body {
+            background: linear-gradient(45deg, #FC466B, #3F5EFB);
+            height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1 {
+            color: white;
+            font-family: 'Montserrat', sans-serif; 
+        }
+
         .data {
-            padding: 20px;
+            padding-left: 20px;
+            padding-right:20px;
+            padding-top:20px;
+            padding-bottom:5px;
             margin: 10px;
             background-color: #eee;
         }
+
+        .trash {
+            text-align: right;
+        }
     </style>
 
-<head>
+</head>
+<body>
     <h1>Reportes de Falla</h1>
-    <form action="equipo-con-mas-fallas">
-        <input type="submit" value="Equipo con mas fallas" />
-    </form>
-    <form action="persona-con-mas-fallas">
-        <input type="submit" value="Persona con mas fallas" />
-    </form>
-    <form action="display-reportes-por-mes-y-año">
-        <input type="submit" value="Reportes por mes y año" />
-    </form>
-</head>
+    <div>
+        <form style="display:inline-block" action="equipo-con-mas-fallas">
+          <input type="submit" value="Equipo con mas fallas" />
+        </form>
+        <form style="display:inline-block" action="persona-con-mas-fallas">
+          <input type="submit" value="Persona con mas fallas" />
+        </form>
+        <form style="display:inline-block" action="display-reportes-por-mes-y-año">
+          <input type="submit" value="Reportes por mes y año" />
+        </form>
+        <form style="display:inline-block" action="fallas-por-periodo">
+          <input type="submit" value="Fallas por mes y año" />
+        </form>
+      </div>
 
-</head>
     {% for data in reportes %}
         <div class="data">
             <h3>Nombre: {{data["nombre"]}}</h3>
@@ -32,7 +55,9 @@
             <h3>Equipo: {{data["equipo"]}}</h3>
             <h3>Falla: {{data["falla"]}}</h3>
             <h4><a href="reporte-num-{{data["_id"]}}" style="color:black;">More info</a></h4>
-            <h4><a href="delete-{{data["_id"]}}" style="color:black; float: right; padding-bottom: 10px;">Delete</a></h4>
+            <div class="trash">
+                <p><a href="delete-{{data["_id"]}}" style="color:black; display:block; margin-left: auto;"><img src="{{ url_for('static', filename='Delete.png') }}"  style="width:25px;height:25px;"></a></p>
+            </div>
         </div>
     {% endfor %}
     </div>

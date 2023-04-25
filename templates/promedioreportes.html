@@ -2,12 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FlaskApp</title>
+    <title>Solveware</title>
     <style>
+
+        body {
+            background: linear-gradient(45deg, #FC466B, #3F5EFB);
+            height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+        }
+
         .data {
             padding: 20px;
             margin: 10px;
             background-color: #eee;
+        }
+
+        h1 {
+            color: white;
+            font-family: 'Montserrat', sans-serif; 
         }
 
         .form-container {
@@ -29,73 +41,82 @@
             font-size: 16px;
             cursor: pointer;
         }
+
+        .result-container {
+            color: white;
+            margin: 0 auto;
+            max-width: 600px;
+            text-align: center;
+          }
+
     </style>
-
-{%set date1 = dates[0]%}
-{%set date2 = dates[1]%}
-{%set date1 = date1.split("-")%}
-{%set date2 = date2.split("-")%}
-
-
-
-  <!--User selects starting date-->
-<div class="form-container">
-<form method = "post">
-    <label for="month">Month:</label>
-    <select id="month" name="start_month">
-        <option value="01" {% if date1[1] == '01' %}selected{% endif %}>January</option>
-        <option value="02" {% if date1[1] == '02' %}selected{% endif %}>February</option>
-        <option value="03" {% if date1[1] == '03' %}selected{% endif %}>March</option>
-        <option value="04" {% if date1[1] == '04' %}selected{% endif %}>April</option>
-        <option value="05" {% if date1[1] == '05' %}selected{% endif %}>May</option>
-        <option value="06" {% if date1[1] == '06' %}selected{% endif %}>June</option>
-        <option value="07" {% if date1[1] == '07' %}selected{% endif %}>July</option>
-        <option value="08" {% if date1[1] == '08' %}selected{% endif %}>August</option>
-        <option value="09" {% if date1[1] == '09' %}selected{% endif %}>September</option>
-        <option value="10" {% if date1[1] == '10' %}selected{% endif %}>October</option>
-        <option value="11" {% if date1[1] == '11' %}selected{% endif %}>November</option>
-        <option value="12" {% if date1[1] == '12' %}selected{% endif %}>December</option>
-    </select>
-  
-    <label for="day">Day:</label>
-    <input type="number" id="start_day" name="start_day" min="1" max="31" value={{date1[2]}}>
-  
-    <label for="year">Year:</label>
-    <input type="number" id="year" name="start_year" min="1900" max="2099" value={{date1[0]}}>
-
-<h3>Fecha inicial: {{dates[0]}} </h3>
-
-  <!--User selects end date-->
-    <label for="month">Month:</label>
-    <select id="month" name="end_month">
-        <option value="01" {% if date2[1] == '01' %}selected{% endif %}>January</option>
-        <option value="02" {% if date2[1] == '02' %}selected{% endif %}>February</option>
-        <option value="03" {% if date2[1] == '03' %}selected{% endif %}>March</option>
-        <option value="04" {% if date2[1] == '04' %}selected{% endif %}>April</option>
-        <option value="05" {% if date2[1] == '05' %}selected{% endif %}>May</option>
-        <option value="06" {% if date2[1] == '06' %}selected{% endif %}>June</option>
-        <option value="07" {% if date2[1] == '07' %}selected{% endif %}>July</option>
-        <option value="08" {% if date2[1] == '08' %}selected{% endif %}>August</option>
-        <option value="09" {% if date2[1] == '09' %}selected{% endif %}>September</option>
-        <option value="10" {% if date2[1] == '10' %}selected{% endif %}>October</option>
-        <option value="11" {% if date2[1] == '11' %}selected{% endif %}>November</option>
-        <option value="12" {% if date2[1] == '12' %}selected{% endif %}>December</option>
-    </select>
-  
-    <label for="day">Day:</label>
-    <input type="number" id="day" name="end_day" min="1" max="31" value={{date2[2]}}>
-  
-    <label for="year">Year:</label>
-    <input type="number" id="year" name="end_year" min="1900" max="2099" value={{date2[0]}}>
-    <button type="submit">Submit</button>
-    <h3>Fecha final: {{dates[1]}} </h3>
-</form>
-</div>
-
-<div class="result-container">
-    <h3> {{result}} </h3>
-</div>
+</head>
+<body>
+    {%set date1 = dates[0]%}
+    {%set date2 = dates[1]%}
+    {%set date1 = date1.split("-")%}
+    {%set date2 = date2.split("-")%}
 
 
-  
-  
+
+    <!--User selects starting date-->
+    <div class="form-container">
+    <form method = "post">
+        <label for="month">Month:</label>
+        <select id="month" name="start_month">
+            <option value="01" {% if date1[1] == '01' %}selected{% endif %}>January</option>
+            <option value="02" {% if date1[1] == '02' %}selected{% endif %}>February</option>
+            <option value="03" {% if date1[1] == '03' %}selected{% endif %}>March</option>
+            <option value="04" {% if date1[1] == '04' %}selected{% endif %}>April</option>
+            <option value="05" {% if date1[1] == '05' %}selected{% endif %}>May</option>
+            <option value="06" {% if date1[1] == '06' %}selected{% endif %}>June</option>
+            <option value="07" {% if date1[1] == '07' %}selected{% endif %}>July</option>
+            <option value="08" {% if date1[1] == '08' %}selected{% endif %}>August</option>
+            <option value="09" {% if date1[1] == '09' %}selected{% endif %}>September</option>
+            <option value="10" {% if date1[1] == '10' %}selected{% endif %}>October</option>
+            <option value="11" {% if date1[1] == '11' %}selected{% endif %}>November</option>
+            <option value="12" {% if date1[1] == '12' %}selected{% endif %}>December</option>
+        </select>
+    
+        <label for="day">Day:</label>
+        <input type="number" id="start_day" name="start_day" min="1" max="31" value={{date1[2]}}>
+    
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="start_year" min="1900" max="2099" value={{date1[0]}}>
+
+    <h3>Fecha inicial: {{dates[0]}} </h3>
+
+    <!--User selects end date-->
+        <label for="month">Month:</label>
+        <select id="month" name="end_month">
+            <option value="01" {% if date2[1] == '01' %}selected{% endif %}>January</option>
+            <option value="02" {% if date2[1] == '02' %}selected{% endif %}>February</option>
+            <option value="03" {% if date2[1] == '03' %}selected{% endif %}>March</option>
+            <option value="04" {% if date2[1] == '04' %}selected{% endif %}>April</option>
+            <option value="05" {% if date2[1] == '05' %}selected{% endif %}>May</option>
+            <option value="06" {% if date2[1] == '06' %}selected{% endif %}>June</option>
+            <option value="07" {% if date2[1] == '07' %}selected{% endif %}>July</option>
+            <option value="08" {% if date2[1] == '08' %}selected{% endif %}>August</option>
+            <option value="09" {% if date2[1] == '09' %}selected{% endif %}>September</option>
+            <option value="10" {% if date2[1] == '10' %}selected{% endif %}>October</option>
+            <option value="11" {% if date2[1] == '11' %}selected{% endif %}>November</option>
+            <option value="12" {% if date2[1] == '12' %}selected{% endif %}>December</option>
+        </select>
+    
+        <label for="day">Day:</label>
+        <input type="number" id="day" name="end_day" min="1" max="31" value={{date2[2]}}>
+    
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="end_year" min="1900" max="2099" value={{date2[0]}}>
+        <button type="submit">Submit</button>
+        <h3>Fecha final: {{dates[1]}} </h3>
+    </form>
+    </div>
+
+    <div class="result-container">
+        <h3> {{result}} </h3>
+    </div>
+</body>
+
+    
+    

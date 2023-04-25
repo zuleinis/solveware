@@ -2,66 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FlaskApp</title>
+    <title>Solveware</title>
     <style>
+
+        h1 {
+            color: white;
+            font-family: 'Montserrat', sans-serif; 
+        }
+
+        body {
+            background: linear-gradient(45deg, #FC466B, #3F5EFB);
+            height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+        }
+
         .data {
             padding: 20px;
             margin: 10px;
             background-color: #eee;
         }
+
+        .result-container {
+            color: white;
+            margin: 0 auto;
+            max-width: 600px;
+            text-align: center;
+          }
     </style>
-
-{%set month = date[0] %}
-{%set year = date[1] %}
-
-<head>
-    <h1>Reportes de Falla</h1>
-    <form action="equipo-con-mas-fallas">
-        <input type="submit" value="Equipo con mas fallas" />
-    </form>
-    <form action="persona-con-mas-fallas">
-        <input type="submit" value="Persona con mas fallas" />
-    </form>
 </head>
+<body>
+    {%set month = date[0] %}
+    {%set year = date[1] %}
 
-<div class="form-container">
-    <form method = "post">
-        <label for="month">Month:</label>
-        <select id="month" name="selected_month">
-            <option value="01" {% if month == '01' %}selected{% endif %}>January</option>
-            <option value="02" {% if month == '02' %}selected{% endif %}>February</option>
-            <option value="03" {% if month == '03' %}selected{% endif %}>March</option>
-            <option value="04" {% if month == '04' %}selected{% endif %}>April</option>
-            <option value="05" {% if month == '05' %}selected{% endif %}>May</option>
-            <option value="06" {% if month == '06' %}selected{% endif %}>June</option>
-            <option value="07" {% if month == '07' %}selected{% endif %}>July</option>
-            <option value="08" {% if month == '08' %}selected{% endif %}>August</option>
-            <option value="09" {% if month == '09' %}selected{% endif %}>September</option>
-            <option value="10" {% if month == '10' %}selected{% endif %}>October</option>
-            <option value="11" {% if month == '11' %}selected{% endif %}>November</option>
-            <option value="12" {% if month == '12' %}selected{% endif %}>December</option>
-        </select>
+        <h1>Reportes de Falla</h1>
+        <form style="display:inline-block" action="equipo-con-mas-fallas">
+            <input type="submit" value="Equipo con mas fallas" />
+        </form>
+        <form style="display:inline-block" action="persona-con-mas-fallas">
+            <input type="submit" value="Persona con mas fallas" />
+        </form>
 
-    <label for="year">Year:</label>
-    <input type="number" id="year" name="selected_year" min="1900" max="2099" value={{year}}>
-    <button type="submit">Submit</button>
+    <div style="display:inline-block" class="form-container">
+        <form style="display:inline-block" method = "post">
+            <label for="month">Month:</label>
+            <select id="month" name="selected_month">
+                <option value="01" {% if month == '01' %}selected{% endif %}>January</option>
+                <option value="02" {% if month == '02' %}selected{% endif %}>February</option>
+                <option value="03" {% if month == '03' %}selected{% endif %}>March</option>
+                <option value="04" {% if month == '04' %}selected{% endif %}>April</option>
+                <option value="05" {% if month == '05' %}selected{% endif %}>May</option>
+                <option value="06" {% if month == '06' %}selected{% endif %}>June</option>
+                <option value="07" {% if month == '07' %}selected{% endif %}>July</option>
+                <option value="08" {% if month == '08' %}selected{% endif %}>August</option>
+                <option value="09" {% if month == '09' %}selected{% endif %}>September</option>
+                <option value="10" {% if month == '10' %}selected{% endif %}>October</option>
+                <option value="11" {% if month == '11' %}selected{% endif %}>November</option>
+                <option value="12" {% if month == '12' %}selected{% endif %}>December</option>
+            </select>
 
-</head>
-    {% for data in reportes %}
-        <div class="data">
-            <h3>Nombre: {{data["nombre"]}}</h3>
-            <h3>ID de reporte: {{data["_id"]}}</h3>
-            <h3>Equipo: {{data["equipo"]}}</h3>
-            <h3>Falla: {{data["falla"]}}</h3>
-            <h4><a href="reporte-num-{{data["_id"]}}" style="color:black;">More info</a></h4>
-            <h4><a href="delete-{{data["_id"]}}" style="color:black; float: right; padding-bottom: 10px;">Delete</a></h4>
-        </div>
-    {% endfor %}
-    </div>
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="selected_year" min="1900" max="2099" value={{year}}>
+        <button type="submit">Submit</button>
+    </div>    
+        {% for data in reportes %}
+            <div class="data">
+                <h3>Nombre: {{data["nombre"]}}</h3>
+                <h3>ID de reporte: {{data["_id"]}}</h3>
+                <h3>Equipo: {{data["equipo"]}}</h3>
+                <h3>Falla: {{data["falla"]}}</h3>
+                <h4><a href="reporte-num-{{data["_id"]}}" style="color:black;">More info</a></h4>
+                <h4><a href="delete-{{data["_id"]}}" style="color:black; float: right; padding-bottom: 10px;">Delete</a></h4>
+            </div>
+        {% endfor %}
 
-    <form action="crear-reporte">
-        <input type="submit" value="Back" />
-    </form>
+        <form action="crear-reporte">
+            <input type="submit" value="Back" />
+        </form>
 
 </body>
 </html>

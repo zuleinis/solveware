@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
   <header>
-    <link rel="stylesheet" href="/static/css/formulario.css">
+    <link rel="stylesheet" href="/static/css/formulario.css" />
+    <title>Solveware</title>
   </header>
   <style>
-    .display{
-        padding: 10px;
+    .display {
+      padding: 10px;
     }
 
-    .displaybtn{
-      background-color: #04AA6D;
+    h1 {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .displaybtn {
+      background-color: #04aa6d;
       border: none;
       color: white;
       padding: 16px 32px;
@@ -17,8 +22,7 @@
       margin: 4px 2px;
       cursor: pointer;
     }
-    
-</style>
+  </style>
 
   <head>
     <title>Reporte de Fallas</title>
@@ -34,19 +38,29 @@
         <input type="text" id="nombre" name="nombre" required />
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required />
+        <label for="tel">Teléfono:</label>
+        <input
+          type="tel"
+          id="tel"
+          name="tel"
+          placeholder="123-45-678"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          required
+        />
         <label for="equipo">Equipo:</label>
         <input type="text" id="equipo" name="equipo" required />
         <label for="falla">Falla:</label>
         <textarea id="falla" name="falla" required></textarea>
-        <input type="submit" value="Enviar" />
+        <div class="display">
+          <input type="submit" value="Enviar" />
+        </div>
       </form>
 
       <div class="display">
-        <form action="display-reportes" >
-          <input type="submit" value="Display data" class="displaybtn"/>
-      </form>
+        <form action="display-reportes">
+          <input type="submit" value="Mostrar Reportes" class="displaybtn" />
+        </form>
       </div>
-      
     </main>
     <footer>
       <p>&copy; 2023 Departamento de Atención al Usuario</p>
